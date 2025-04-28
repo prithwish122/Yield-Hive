@@ -72,9 +72,9 @@ export function HeroSection() {
     "Diversified investment portfolio",
   ]
 
-  const yieldText = "YIELD-".split("")
-  const hive = "HIVE".split("")
-  const platform = "PLATFORM".split("")
+  const yieldText = "AGRO-".split("")
+  const hive = "INDUSTRIAL".split("")
+  const platform = "HOLDING".split("")
 
   return (
     <section className="relative pt-24">
@@ -113,10 +113,10 @@ export function HeroSection() {
             </span>
           </motion.h1>
 
-          <div className="relative mx-auto mt-8 h-[400px] w-full max-w-[850px] overflow-hidden rounded-2xl bg-gradient-to-b from-[#4db6ac] to-[#c5e063] sm:h-[450px] md:h-[500px]">
+          <div className="relative mx-auto mt-8 h-[800px] w-full max-w-[1650px] overflow-hidden rounded-2xl bg-gradient-to-b from-[#4db6ac] to-[#c5e063] sm:h-[450px] md:h-[500px]">
             <div className="absolute inset-0">
               <Image
-                src="/placeholder.svg?height=500&width=850"
+                src="/bg.jpg"
                 alt="Farm landscape with fields, barn and wind turbines"
                 fill
                 className="object-cover"

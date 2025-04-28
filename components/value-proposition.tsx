@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Image from "next/image"
 import { Leaf, BarChart3, Coins, Shield } from "lucide-react"
 
 const features = [
@@ -27,45 +28,111 @@ const features = [
 ]
 
 export function ValueProposition() {
+  const statsVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: 0.3 + i * 0.2,
+        duration: 0.5,
+        ease: "easeOut"
+      },
+    }),
+  }
+
+  const contentVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      },
+    }
+  }
+
+  const stats = [
+    {
+      number: "60 000",
+      description: "tons capacity of own elevator",
+      bgColor: "bg-[#e9eda1]",
+    },
+    {
+      number: "28 000",
+      description: "tons of export of grain & oilseeds",
+      bgColor: "bg-[#c5e6a6]", 
+    },
+    {
+      number: "5 000",
+      description: "hectares of land owned",
+      bgColor: "bg-[#ffd7b5]",
+    }
+  ]
+
   return (
-    <section className="py-16">
+    <section className="py-16 bg-[#fcf9ef]">
       <div className="container mx-auto px-4">
-        <motion.div
-          className="mb-12 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-3xl font-bold text-[#1a2e44] sm:text-4xl">Why Choose Yield Hive</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
-            Our platform offers unique advantages for both investors and property owners
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              className="group relative overflow-hidden rounded-xl bg-white p-6 shadow-md transition-all duration-300 hover:shadow-xl"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{
-                y: -5,
-                transition: { duration: 0.2 },
-              }}
-            >
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#e6f7f5]">
-                {feature.icon}
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* About Us Content */}
+          <motion.div 
+            className="lg:w-1/2 bg-[#f5f2e3] rounded-3xl p-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={contentVariants}
+          >
+            <div className="mb-4">
+              <span className="px-4 py-2 bg-[#4db6ac] text-white rounded-full text-sm font-medium">
+                About Us
+              </span>
+            </div>
+            
+            <p className="text-[#1a2e44] text-lg mb-8">
+              The Agrarian Company is a powerful team of professionals with vast experience in the agricultural industry. 
+              The group of companies maintains stable relations both with leading international trading companies and 
+              with domestic grain traders, has proven itself as a reliable partner in business.
+            </p>
+            
+            <div className="flex items-center">
+              <div className="mr-4">
+                <Image 
+                  src="/api/placeholder/60/60" 
+                  alt="Alfonso Workman" 
+                  width={60} 
+                  height={60}
+                  className="rounded-full"
+                />
               </div>
-              <h3 className="mb-2 text-xl font-bold text-[#1a2e44]">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
-
-              <div className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-[#4db6ac] to-[#c5e063] transition-all duration-300 group-hover:w-full"></div>
-            </motion.div>
-          ))}
+              <div>
+                <h4 className="font-bold text-[#1a2e44]">Alfonso Workman</h4>
+                <p className="text-[#1a2e44]/70">Marketing Director</p>
+              </div>
+            </div>
+          </motion.div>
+          
+          {/* Stats */}
+          <div className="lg:w-1/2">
+            <div className="flex flex-col gap-6">
+              {stats.map((stat, index) => (
+                <motion.div 
+                  key={index}
+                  className={`${stat.bgColor} rounded-full p-6 flex items-center justify-center`}
+                  custom={index}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={statsVariants}
+                >
+                  <div className="text-center">
+                    <h2 className="text-5xl font-bold text-[#1a2e44]">{stat.number}</h2>
+                    <p className="text-[#1a2e44]/70">{stat.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
