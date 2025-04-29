@@ -55,18 +55,18 @@ export function ValueProposition() {
 
   const stats = [
     {
-      number: "60 000",
-      description: "tons capacity of own elevator",
+      number: "Sustainable Investments",
+      description: "Support eco-friendly properties and farmland with positive environmental impact.",
       bgColor: "bg-[#e9eda1]",
     },
     {
-      number: "28 000",
-      description: "tons of export of grain & oilseeds",
+      number: "Transparent Returns",
+      description: "Track your earnings in real-time with our comprehensive dashboard.",
       bgColor: "bg-[#c5e6a6]", 
     },
     {
-      number: "5 000",
-      description: "hectares of land owned",
+      number: "Fractional Ownership",
+      description: "Start with as little as $100 and build your portfolio step by step.",
       bgColor: "bg-[#ffd7b5]",
     }
   ]
@@ -90,12 +90,10 @@ export function ValueProposition() {
             </div>
             
             <p className="text-[#1a2e44] text-lg mb-8">
-              The Agrarian Company is a powerful team of professionals with vast experience in the agricultural industry. 
-              The group of companies maintains stable relations both with leading international trading companies and 
-              with domestic grain traders, has proven itself as a reliable partner in business.
+            Yield Hive is a decentralized platform revolutionizing access to real-world income-generating assets. By tokenizing rental income from real estate and farmland, we enable fractional ownership, automated payouts, and sustainable passive earnings. Powered by the Pharos Chain, Yield Hive ensures secure, transparent, and efficient investment experiences for everyone—bringing institutional-grade opportunities to everyday investors.
             </p>
             
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <div className="mr-4">
                 <Image 
                   src="/api/placeholder/60/60" 
@@ -109,7 +107,7 @@ export function ValueProposition() {
                 <h4 className="font-bold text-[#1a2e44]">Alfonso Workman</h4>
                 <p className="text-[#1a2e44]/70">Marketing Director</p>
               </div>
-            </div>
+            </div> */}
           </motion.div>
           
           {/* Stats */}
@@ -126,7 +124,7 @@ export function ValueProposition() {
                   variants={statsVariants}
                 >
                   <div className="text-center">
-                    <h2 className="text-5xl font-bold text-[#1a2e44]">{stat.number}</h2>
+                    <h2 className="text-3xl font-bold text-[#1a2e44]">{stat.number}</h2>
                     <p className="text-[#1a2e44]/70">{stat.description}</p>
                   </div>
                 </motion.div>

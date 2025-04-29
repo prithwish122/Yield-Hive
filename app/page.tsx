@@ -20,8 +20,8 @@ export default function Home() {
       <FloatingElements />
       <ValueProposition />
       <PlatformOverview />
-      <AboutUs />
-      <SuccessStats />
+      {/* <AboutUs /> */}
+      {/* <SuccessStats /> */}
       <FeaturedProperties />
       <BlogHighlights />
       <NewsletterSignup />

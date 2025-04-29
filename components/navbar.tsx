@@ -35,13 +35,18 @@ export function Navbar() {
 
   return (
     <motion.header
-      className="absolute top-0 z-40 w-full py-6"
+      className="fixed top-0 z-40 w-full px-4 py-3"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
-      <div className="mx-auto max-w-[90%] px-4 sm:px-6 lg:max-w-[1200px]">
-        <div className="flex items-center justify-between">
+      <div className="mx-auto max-w-[45%] lg:max-w-[55%]">
+        <motion.div 
+          className="flex items-center justify-between rounded-full bg-white shadow-md px-6 py-3"
+          variants={itemVariants}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
           <motion.div
             className="flex items-center"
             variants={itemVariants}
@@ -85,24 +90,25 @@ export function Navbar() {
             ))}
           </nav>
 
-          <w3m-button />
-
-          <div className="md:hidden">
-            <button
-              className="text-[#1a2e44]"
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label={isOpen ? "Close menu" : "Open menu"}
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
+          <div className="flex items-center space-x-3">
+            <appkit-button balance="hide" />
+            <div className="md:hidden">
+              <button
+                className="text-[#1a2e44]"
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+              >
+                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </button>
+            </div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Mobile menu */}
       {isOpen && (
         <motion.div
-          className="absolute left-0 right-0 z-50 mt-2 bg-white p-4 shadow-lg md:hidden"
+          className="absolute left-0 right-0 z-50 mx-auto mt-2 max-w-[95%] rounded-xl bg-white p-4 shadow-lg md:hidden"
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}

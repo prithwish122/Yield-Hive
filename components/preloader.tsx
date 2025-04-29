@@ -118,7 +118,7 @@ export function Preloader() {
 
   // Split text for letter animation
   const yieldHive = "YIELD HIVE".split("")
-  const platform = "PLATFORM".split("")
+  const platform = "".split("")
 
   if (!isLoading) return null
 
