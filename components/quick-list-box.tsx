@@ -36,13 +36,13 @@ export default function QuickListBox({ onListProperty }: QuickListBoxProps) {
 
 
 
-  const storageSC = "0xecd86bd57e1acb95ba48ac80bc9b806e83e2eaca" 
+  const storageSC = "0x7dba8a59f58db102e515c554e3d7546f358dfa85" 
 
   const { isConnected } = useAppKitAccount() // AppKit hook to get the address and check if the user is connected
   const { chainId } = useAppKitNetwork()  // to get chainid
   const { writeContract, isSuccess } = useWriteContract()  // to interact with contract
 
-  const handleWriteSmartContract = () => {
+  const handleEnlistProp = () => {
     console.log("Write Sepolia Smart Contract")
     writeContract({
       address: storageSC,
@@ -113,7 +113,7 @@ export default function QuickListBox({ onListProperty }: QuickListBoxProps) {
             />
           </div>
           <div className="flex items-end">
-            <Button type="submit" onClick={handleWriteSmartContract} className="h-9 w-full bg-teal-600 hover:bg-teal-700">
+            <Button type="submit" onClick={handleEnlistProp} className="h-9 w-full bg-teal-600 hover:bg-teal-700">
               List Now
             </Button>
           </div>

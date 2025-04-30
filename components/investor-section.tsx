@@ -9,6 +9,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import PropertyCard from "@/components/property-card"
+import propAbi from "@/contract/cabi.json"
+import { useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react"
+import { useWriteContract } from "wagmi"
+
 
 interface InvestorSectionProps {
   properties: Property[]
@@ -21,10 +25,29 @@ export default function InvestorSection({ properties, investments, buyShares, cl
   const [sharesToBuy, setSharesToBuy] = useState("")
   const [selectedPropertyId, setSelectedPropertyId] = useState("")
   const [isBuyDialogOpen, setIsBuyDialogOpen] = useState(false)
+  const storageSC = "0x7dba8a59f58db102e515c554e3d7546f358dfa85"
+
+  const { isConnected } = useAppKitAccount() // AppKit hook to get the address and check if the user is connected
+  const { chainId } = useAppKitNetwork()  // to get chainid
+  const { writeContract, isSuccess } = useWriteContract()  // to interact with contract
 
   const handleBuyShares = () => {
     if (!sharesToBuy || !selectedPropertyId) return
+    try {
+      console.log("Write Sepolia Smart Contract")
+      writeContract({
+        address: storageSC,
+        abi: propAbi,
+        functionName: 'buyShares',
+        args: ["0", 5 ],
+      })
+    } catch (error) {
+      console.log(error);
+    }
 
+    if (isSuccess) {
+      console.log("============Successsfully called BUYSHARES============");
+    }
     buyShares(selectedPropertyId, Number.parseInt(sharesToBuy, 10))
 
     // Reset form
@@ -123,9 +146,9 @@ export default function InvestorSection({ properties, investments, buyShares, cl
                 max={
                   selectedPropertyId
                     ? (() => {
-                        const property = properties.find((p) => p.id === selectedPropertyId);
-                        return property ? property.totalShares - property.soldShares : 0;
-                      })()
+                      const property = properties.find((p) => p.id === selectedPropertyId);
+                      return property ? property.totalShares - property.soldShares : 0;
+                    })()
                     : 0
                 }
                 step="1"
