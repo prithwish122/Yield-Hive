@@ -41,7 +41,7 @@ const customNetwork = defineChain({
     },
   },
   blockExplorers: {
-    default: { name: 'Explorer', url: 'BLOCK_EXPLORER_URL' },
+    default: { name: 'Explorer', url: 'https://pharosscan.xyz/' },
   },
   contracts: {
     // Add the contracts here

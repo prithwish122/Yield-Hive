@@ -8,6 +8,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react"
+import { useWriteContract } from "wagmi"
+import propAbi from "@/contract/cabi.json"
+
 
 interface QuickListBoxProps {
   onListProperty: (name: string, monthlyIncome: number, totalShares: number) => void
@@ -28,6 +32,28 @@ export default function QuickListBox({ onListProperty }: QuickListBoxProps) {
     setName("")
     setMonthlyIncome("")
     setTotalShares("")
+  }
+
+
+
+  const storageSC = "0xecd86bd57e1acb95ba48ac80bc9b806e83e2eaca" 
+
+  const { isConnected } = useAppKitAccount() // AppKit hook to get the address and check if the user is connected
+  const { chainId } = useAppKitNetwork()  // to get chainid
+  const { writeContract, isSuccess } = useWriteContract()  // to interact with contract
+
+  const handleWriteSmartContract = () => {
+    console.log("Write Sepolia Smart Contract")
+    writeContract({
+      address: storageSC,
+      abi: propAbi,
+      functionName: 'enlistProperty',
+      args: [name, monthlyIncome, totalShares],
+    })
+    if(isSuccess) {
+      console.log("successsfulky called");
+      
+    }
   }
 
   return (
@@ -87,7 +113,7 @@ export default function QuickListBox({ onListProperty }: QuickListBoxProps) {
             />
           </div>
           <div className="flex items-end">
-            <Button type="submit" className="h-9 w-full bg-teal-600 hover:bg-teal-700">
+            <Button type="submit" onClick={handleWriteSmartContract} className="h-9 w-full bg-teal-600 hover:bg-teal-700">
               List Now
             </Button>
           </div>
