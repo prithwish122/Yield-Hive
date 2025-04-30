@@ -1,7 +1,20 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Search, CreditCard, LineChart, Building, ChartBar, Shield } from "lucide-react"
+import { 
+  Search, 
+  CreditCard, 
+  LineChart, 
+  Building, 
+  ChartBar, 
+  Shield, 
+  Wallet, 
+  BarChart4, 
+  Home, 
+  DollarSign,
+  ArrowRight,
+  Gift
+} from "lucide-react"
 
 // Enhanced color palette
 const colors = {
@@ -11,41 +24,71 @@ const colors = {
   light: "#e0f2f1",         // Light teal background
   dark: "#102a43",          // Deep blue-gray
   accent: "#ffc400",        // Vibrant amber accent
+  success: "#4caf50",       // Success green
+  warning: "#ff9800",       // Warning orange
 }
 
-const steps = [
+// Complete workflow steps with detailed actions - more concise descriptions
+const workflowSteps = [
+  {
+    icon: <Wallet className="h-8 w-8 text-white" />,
+    title: "Connect Wallet",
+    description: "Link your wallet to start. First-time users get 10 YHT gas fee rebate.",
+    action: "Connect Wallet",
+    highlight: "First-time bonus: 10 YHT tokens"
+  },
   {
     icon: <Search className="h-8 w-8 text-white" />,
-    title: "Discover Premium Properties",
-    description: "Browse our vetted portfolio of high-yield real estate and agricultural investments that match your financial goals.",
+    title: "Browse Properties",
+    description: "Explore vetted properties with analytics on yields and available shares.",
+    action: "View Properties",
+    highlight: "Filter by property type & ROI"
   },
   {
-    icon: <CreditCard className="h-8 w-8 text-white" />,
-    title: "Invest With Confidence",
-    description: "Secure fractional ownership through our enterprise-grade blockchain platform with as little as $100.",
+    icon: <Home className="h-8 w-8 text-white" />,
+    title: "Buy Shares",
+    description: "Purchase fractional shares with transparent fees and instant confirmation.",
+    action: "Buy Shares",
+    highlight: "Minimum investment: $100"
   },
   {
-    icon: <LineChart className="h-8 w-8 text-white" />,
-    title: "Track & Earn Passively",
-    description: "Monitor your portfolio performance and receive automated dividend payments directly to your wallet.",
+    icon: <BarChart4 className="h-8 w-8 text-white" />,
+    title: "Track Portfolio",
+    description: "Monitor performance with real-time analytics on value and income.",
+    action: "My Holdings",
+    highlight: "Live performance metrics"
   },
+  {
+    icon: <DollarSign className="h-8 w-8 text-white" />,
+    title: "Claim Income",
+    description: "Receive dividend payments from rental or agricultural yields to your wallet.",
+    action: "Claim",
+    highlight: "Auto or manual withdrawals"
+  },
+  {
+    icon: <Gift className="h-8 w-8 text-white" />,
+    title: "Shared Benefits",
+    description: "Access gas rebates, referral rewards, and premium property early access.",
+    action: "Claim Rewards",
+    highlight: "Rewards based on portfolio size"
+  }
 ]
 
-const features = [
+const platformFeatures = [
   {
     icon: <Building className="h-6 w-6 text-white" />,
     title: "Property Tokenization",
-    description: "Premium real estate assets fractionally divided into blockchain-verified tokens",
+    description: "Premium real estate assets fractionally divided into blockchain-verified tokens"
   },
   {
     icon: <Shield className="h-6 w-6 text-white" />,
     title: "Smart Contracts",
-    description: "Transparent automated rental distribution with bank-level security",
+    description: "Transparent automated rental distribution with bank-level security"
   },
   {
     icon: <ChartBar className="h-6 w-6 text-white" />,
     title: "Investor Dashboard",
-    description: "Real-time analytics and performance tracking of your investment portfolio",
+    description: "Real-time analytics and performance tracking of your investment portfolio"
   }
 ]
 
@@ -89,8 +132,8 @@ export function PlatformOverview() {
   }
 
   return (
-    <section id="how-it-works" className="bg-gradient-to-b from-[#e0f2f1] to-white py-24">
-      <div className="container mx-auto px-4">
+    <section id="how-it-works" className="bg-gradient-to-b from-[#e0f2f1] to-white py-32">
+      <div className="container mx-auto px-6 max-w-7xl">
         <motion.div
           className="mx-auto mb-16 max-w-3xl text-center"
           initial={{ opacity: 0, y: 30 }}
@@ -108,8 +151,8 @@ export function PlatformOverview() {
           </p>
         </motion.div>
 
-        {/* Visualization Section */}
-        <div className="relative mx-auto mb-24 h-[400px] overflow-hidden rounded-2xl bg-gradient-to-br from-[#00796b]/10 to-[#b2ff59]/10 p-6 shadow-lg">
+        {/* Interactive Workflow Visualization - Full Width with Auto-Scroll */}
+        <div className="relative mb-24 w-full overflow-hidden bg-gradient-to-br from-[#00796b]/10 to-[#b2ff59]/10 py-12 shadow-xl">
           {/* Background pattern */}
           <div className="absolute inset-0 overflow-hidden">
             <motion.svg 
@@ -133,108 +176,198 @@ export function PlatformOverview() {
             </motion.svg>
           </div>
 
-          {/* Central flow illustration */}
+          {/* Workflow title */}
           <motion.div
-            className="absolute left-1/2 top-1/2 h-1 w-3/4 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-[#00796b] via-[#4db6ac] to-[#b2ff59]"
-            initial={{ scaleX: 0, opacity: 0 }}
-            whileInView={{ scaleX: 1, opacity: 1 }}
+            className="mb-6 text-center"
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.3 }}
-          />
-
-          {/* Feature cards */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="relative h-full"
+            transition={{ duration: 0.5 }}
           >
-            {features.map((feature, index) => {
-              // Position calculations
-              const positions = [
-                { top: "20%", left: "15%" },
-                { top: "50%", left: "50%" },
-                { top: "20%", left: "85%" }
-              ]
-              const position = positions[index]
-
-              return (
-                <motion.div
-                  key={index}
-                  className="absolute w-64 -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-5 shadow-xl"
-                  style={{ top: position.top, left: position.left }}
-                  variants={itemVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.2 }}
-                  whileHover={{
-                    y: -5,
-                    boxShadow: "0 25px 50px -12px rgba(0, 121, 107, 0.25)",
-                    transition: { duration: 0.3 }
-                  }}
-                >
-                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-[#00796b] to-[#004d40]">
-                    {feature.icon}
-                  </div>
-                  <h3 className="mb-2 text-lg font-bold text-[#102a43]">{feature.title}</h3>
-                  <p className="text-sm text-gray-600">{feature.description}</p>
-                </motion.div>
-              )
-            })}
+            <h3 className="text-3xl font-bold text-[#102a43]">Complete Investment Workflow</h3>
+            <p className="text-xl text-gray-600">Follow these steps to start earning passive income with Yield Hive</p>
           </motion.div>
 
-          {/* Animated dots */}
-          <motion.div
-            className="absolute left-1/4 top-1/2 h-4 w-4 rounded-full bg-[#00796b]"
-            animate={{
-              y: [-2, 2, -2],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-          />
-          <motion.div
-            className="absolute left-1/2 top-1/2 h-4 w-4 rounded-full bg-[#4db6ac]"
-            animate={{
-              y: [-2, 2, -2],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 2,
-              delay: 0.5,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-          />
-          <motion.div
-            className="absolute left-3/4 top-1/2 h-4 w-4 rounded-full bg-[#b2ff59]"
-            animate={{
-              y: [-2, 2, -2],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 2,
-              delay: 1,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-          />
+          {/* Auto-scrolling workflow - no container constraints */}
+          <div className="relative mx-auto py-12">
+            {/* Central connecting line */}
+            <div className="absolute left-0 top-1/2 h-3 w-full bg-gradient-to-r from-[#00796b] via-[#4db6ac] to-[#b2ff59] opacity-80 shadow-md"></div>
+            
+            {/* Auto-scrolling card container */}
+            <motion.div 
+              className="flex gap-8 px-16"
+              animate={{ 
+                x: [0, '-100%'] 
+              }}
+              transition={{ 
+                duration: 30, 
+                ease: "linear", 
+                repeat: Infinity,
+                repeatType: "loop",
+              }}
+            >
+              {/* Doubled cards for infinite scrolling effect */}
+              {[...workflowSteps, ...workflowSteps].map((step, index) => (
+                <motion.div
+                  key={index}
+                  className="relative flex w-80 flex-none flex-col items-center"
+                  initial={{ opacity: 1 }}
+                  whileInView={{ opacity: 1 }}
+                >
+                  {/* Step Card - Larger and more engaging */}
+                  <motion.div
+                    className="mb-10 rounded-xl bg-white p-6 shadow-xl"
+                    whileHover={{
+                      y: -8,
+                      boxShadow: "0 25px 50px -12px rgba(0, 121, 107, 0.35)",
+                      transition: { duration: 0.3 }
+                    }}
+                  >
+                    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-[#00796b] to-[#004d40] shadow-lg transition-transform duration-300 hover:scale-110">
+                      {step.icon}
+                    </div>
+                    <h3 className="mb-2 text-2xl font-bold text-[#102a43]">{step.title}</h3>
+                    <p className="mb-4 text-base text-gray-600">{step.description}</p>
+                    
+                    <motion.button 
+                      className="mb-3 w-full rounded-lg bg-gradient-to-r from-[#00796b] to-[#004d40] py-3 text-base font-medium text-white shadow-md"
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      {step.action}
+                    </motion.button>
+                    
+                    <div className="rounded-lg bg-[#ffc400]/15 p-3 text-sm font-medium text-[#102a43]">
+                      ✨ {step.highlight}
+                    </div>
+                  </motion.div>
+                  
+                  {/* Step number indicator */}
+                  <motion.div 
+                    className="absolute bottom-0 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-[#b2ff59] text-lg font-bold text-[#004d40] shadow-lg"
+                    initial={{ scale: 0.8 }}
+                    whileInView={{ scale: 1 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    {(index % workflowSteps.length) + 1}
+                  </motion.div>
+                </motion.div>
+              ))}
+            </motion.div>
+            
+            {/* Static duplicate scrolling in opposite direction - for dynamic effect */}
+            <motion.div 
+              className="mt-12 flex gap-8 px-16"
+              animate={{ 
+                x: ['-100%', 0] 
+              }}
+              transition={{ 
+                duration: 35, 
+                ease: "linear", 
+                repeat: Infinity,
+                repeatType: "loop",
+              }}
+            >
+              {/* Doubled cards for infinite scrolling effect */}
+              {[...workflowSteps, ...workflowSteps].map((step, index) => (
+                <motion.div
+                  key={index}
+                  className="relative flex w-80 flex-none flex-col items-center opacity-30"
+                  initial={{ opacity: 0.3 }}
+                  whileInView={{ opacity: 0.3 }}
+                >
+                  {/* Step Card - Ghost effect */}
+                  <motion.div
+                    className="mb-10 rounded-xl bg-white p-6 shadow-lg"
+                  >
+                    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-[#00796b]/80 to-[#004d40]/80">
+                      {step.icon}
+                    </div>
+                    <h3 className="mb-2 text-2xl font-bold text-[#102a43]/80">{step.title}</h3>
+                    <div className="h-12 w-full"></div>
+                  </motion.div>
+                </motion.div>
+              ))}
+            </motion.div>
+            
+            {/* Animated transaction dots */}
+            <motion.div
+              className="absolute left-0 top-1/2 z-20 h-6 w-6 -translate-y-1/2 rounded-full bg-[#ffc400] shadow-md shadow-[#ffc400]/30"
+              animate={{
+                x: ['0%', '100%'],
+                opacity: [0, 1, 1, 0],
+                scale: [0.8, 1.2, 0.8],
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "linear",
+              }}
+            />
+            
+            <motion.div
+              className="absolute left-0 top-1/2 z-20 h-6 w-6 -translate-y-1/2 rounded-full bg-[#b2ff59] shadow-md shadow-[#b2ff59]/30"
+              animate={{
+                x: ['0%', '100%'],
+                opacity: [0, 1, 1, 0],
+                scale: [0.8, 1.2, 0.8],
+              }}
+              transition={{
+                duration: 10,
+                delay: 2.5,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "linear",
+              }}
+            />
+            
+            <motion.div
+              className="absolute left-0 top-1/2 z-20 h-6 w-6 -translate-y-1/2 rounded-full bg-[#00796b] shadow-md shadow-[#00796b]/30"
+              animate={{
+                x: ['0%', '100%'],
+                opacity: [0, 1, 1, 0],
+                scale: [0.8, 1.2, 0.8],
+              }}
+              transition={{
+                duration: 10,
+                delay: 5,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "linear",
+              }}
+            />
+          </div>
+          
+          {/* Control indicators */}
+          <div className="mt-8 flex justify-center space-x-2">
+            <motion.div 
+              className="h-2 w-16 rounded-full bg-[#00796b]"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+            />
+            <motion.div 
+              className="h-2 w-8 rounded-full bg-[#4db6ac]"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, delay: 0.5, repeat: Infinity, repeatType: "reverse" }}
+            />
+            <motion.div 
+              className="h-2 w-4 rounded-full bg-[#b2ff59]"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, delay: 1, repeat: Infinity, repeatType: "reverse" }}
+            />
+          </div>
         </div>
 
-        {/* Process steps */}
+        {/* Platform features */}
         <motion.div
-          className="grid grid-cols-1 gap-8 md:grid-cols-3"
+          className="mb-20 grid grid-cols-1 gap-8 md:grid-cols-3"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          {steps.map((step, index) => (
+          {platformFeatures.map((feature, index) => (
             <motion.div
               key={index}
               className="group relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all duration-300"
@@ -247,10 +380,10 @@ export function PlatformOverview() {
             >
               <div className="relative z-10">
                 <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#00796b] to-[#004d40] shadow-lg transition-transform duration-300 group-hover:scale-110">
-                  {step.icon}
+                  {feature.icon}
                 </div>
-                <h3 className="mb-3 text-2xl font-bold text-[#102a43]">{step.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{step.description}</p>
+                <h3 className="mb-3 text-2xl font-bold text-[#102a43]">{feature.title}</h3>
+                <p className="leading-relaxed text-gray-600">{feature.description}</p>
                 
                 <motion.div 
                   className="mt-6 inline-flex items-center font-medium text-[#00796b]"
@@ -259,9 +392,7 @@ export function PlatformOverview() {
                   transition={{ delay: 0.5 + index * 0.1 }}
                 >
                   Learn more
-                  <svg className="ml-2 h-4 w-4" viewBox="0 0 24 24" fill="none">
-                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </motion.div>
               </div>
 
@@ -280,7 +411,7 @@ export function PlatformOverview() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          {/* <motion.button 
+          <motion.button 
             className="rounded-full bg-gradient-to-r from-[#00796b] to-[#004d40] px-8 py-4 text-lg font-semibold text-white shadow-lg hover:shadow-xl"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
@@ -288,7 +419,7 @@ export function PlatformOverview() {
           >
             Start Investing Today
           </motion.button>
-          <p className="mt-4 text-sm text-gray-500">Join over 10,000 investors earning passive income</p> */}
+          <p className="mt-4 text-sm text-gray-500">Join over 10,000 investors earning passive income</p>
         </motion.div>
       </div>
     </section>

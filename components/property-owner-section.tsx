@@ -55,80 +55,9 @@ export default function PropertyOwnerSection({ properties, enlistProperty, depos
 
   return (
     <div className="grid gap-8">
-      <Card>
-        <CardHeader>
-          <CardTitle>My Properties</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {properties.length > 0 ? (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {properties.map((property) => (
-                <PropertyCard
-                  key={property.id}
-                  property={property}
-                  onBuyClick={() => openDepositDialog(property.id)}
-                  type="owned"
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-8 text-slate-500">
-              No properties listed yet. Add your first property above.
-            </div>
-          )}
-        </CardContent>
-      </Card>
+      
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Enlist New Property</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleEnlistProperty} className="grid gap-4 md:grid-cols-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Property name"
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="monthlyIncome">Monthly Income</Label>
-              <Input
-                id="monthlyIncome"
-                type="number"
-                value={monthlyIncome}
-                onChange={(e) => setMonthlyIncome(e.target.value)}
-                placeholder="0.00"
-                min="0"
-                step="0.01"
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="totalShares">Total Shares</Label>
-              <Input
-                id="totalShares"
-                type="number"
-                value={totalShares}
-                onChange={(e) => setTotalShares(e.target.value)}
-                placeholder="100"
-                min="1"
-                step="1"
-                required
-              />
-            </div>
-            <div className="flex items-end">
-              <Button type="submit" className="bg-teal-600 hover:bg-teal-700">
-                List Property
-              </Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+      
 
       <Card>
         <CardHeader>
