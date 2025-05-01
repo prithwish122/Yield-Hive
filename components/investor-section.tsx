@@ -12,7 +12,8 @@ import PropertyCard from "@/components/property-card"
 import propAbi from "@/contract/cabi.json"
 import { useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react"
 import { useWriteContract } from "wagmi"
-
+import { motion } from "framer-motion"
+import { Building2, Coins, DollarSign, Layers3, Wallet } from "lucide-react"
 
 interface InvestorSectionProps {
   properties: Property[]
@@ -28,8 +29,8 @@ export default function InvestorSection({ properties, investments, buyShares, cl
   const storageSC = "0xdbca3ec6fcc34ca570bf8eb54ca0099809bc20bf"
 
   const { isConnected } = useAppKitAccount() // AppKit hook to get the address and check if the user is connected
-  const { chainId } = useAppKitNetwork()  // to get chainid
-  const { writeContract, isSuccess } = useWriteContract()  // to interact with contract
+  const { chainId } = useAppKitNetwork() // to get chainid
+  const { writeContract, isSuccess } = useWriteContract() // to interact with contract
 
   const handleBuyShares = () => {
     if (!sharesToBuy || !selectedPropertyId) return
@@ -38,15 +39,15 @@ export default function InvestorSection({ properties, investments, buyShares, cl
       writeContract({
         address: storageSC,
         abi: propAbi,
-        functionName: 'buyShares',
-        args: ["0", 5 ],
+        functionName: "buyShares",
+        args: ["0", 5],
       })
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
 
     if (isSuccess) {
-      console.log("============Successsfully called BUYSHARES============");
+      console.log("============Successsfully called BUYSHARES============")
     }
     buyShares(selectedPropertyId, Number.parseInt(sharesToBuy, 10))
 
@@ -69,73 +70,141 @@ export default function InvestorSection({ properties, investments, buyShares, cl
 
   return (
     <div className="grid gap-8">
-      <Card>
-        <CardHeader>
-          <CardTitle>Explore Properties</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {availableProperties.length > 0 ? (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {availableProperties.map((property) => (
-                <PropertyCard key={property.id} property={property} onBuyClick={() => openBuyDialog(property.id)} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-8 text-slate-500">No properties available for investment at the moment.</div>
-          )}
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>My Investments</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {investments.length > 0 ? (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Property Name</TableHead>
-                  <TableHead>Shares Owned</TableHead>
-                  <TableHead>Pending Income</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {investments.map((investment) => (
-                  <TableRow key={investment.id}>
-                    <TableCell>{investment.propertyName}</TableCell>
-                    <TableCell>{investment.sharesOwned}</TableCell>
-                    <TableCell>${investment.pendingIncome.toFixed(2)}</TableCell>
-                    <TableCell>
-                      <Button
-                        onClick={() => handleClaimIncome(investment.propertyId)}
-                        disabled={investment.pendingIncome <= 0}
-                        className="bg-blue-500 hover:bg-blue-600"
-                      >
-                        Claim
-                      </Button>
-                    </TableCell>
-                  </TableRow>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        <Card className="border-amber-200 shadow-lg shadow-amber-100/20 overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-amber-400 to-amber-600 text-white">
+            <CardTitle className="flex items-center gap-2">
+              <Building2 className="h-5 w-5" />
+              Explore Properties
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6">
+            {availableProperties.length > 0 ? (
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {availableProperties.map((property, index) => (
+                  <motion.div
+                    key={property.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                  >
+                    <PropertyCard property={property} onBuyClick={() => openBuyDialog(property.id)} />
+                  </motion.div>
                 ))}
-              </TableBody>
-            </Table>
-          ) : (
-            <div className="text-center py-8 text-slate-500">
-              You don't have any investments yet. Explore properties to invest.
-            </div>
-          )}
-        </CardContent>
-      </Card>
+              </div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="text-center py-12 text-slate-500 bg-amber-50/50 rounded-xl border border-amber-100"
+              >
+                <Building2 className="h-12 w-12 mx-auto text-amber-300 mb-4" />
+                <p className="text-lg font-medium text-amber-700">
+                  No properties available for investment at the moment.
+                </p>
+                <p className="text-sm text-amber-600/70 mt-2">Check back later for new investment opportunities.</p>
+              </motion.div>
+            )}
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        <Card className="border-blue-200 shadow-lg shadow-blue-100/20 overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-blue-500 to-blue-700 text-white">
+            <CardTitle className="flex items-center gap-2">
+              <Wallet className="h-5 w-5" />
+              My Investments
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-0">
+            {investments.length > 0 ? (
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader className="bg-blue-50">
+                    <TableRow>
+                      <TableHead className="text-blue-700">Property Name</TableHead>
+                      <TableHead className="text-blue-700">Shares Owned</TableHead>
+                      <TableHead className="text-blue-700">Pending Income</TableHead>
+                      <TableHead className="text-blue-700">Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {investments.map((investment, index) => (
+                      <motion.tr
+                        key={investment.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                        className="group"
+                      >
+                        <TableCell className="font-medium group-hover:bg-blue-50/30 transition-colors">
+                          {investment.propertyName}
+                        </TableCell>
+                        <TableCell className="group-hover:bg-blue-50/30 transition-colors">
+                          <div className="flex items-center gap-2">
+                            <Layers3 className="h-4 w-4 text-blue-500" />
+                            {investment.sharesOwned}
+                          </div>
+                        </TableCell>
+                        <TableCell className="group-hover:bg-blue-50/30 transition-colors">
+                          <span className="flex items-center gap-1 text-blue-700">
+                            <DollarSign className="h-4 w-4" />
+                            {investment.pendingIncome.toFixed(2)}
+                          </span>
+                        </TableCell>
+                        <TableCell className="group-hover:bg-blue-50/30 transition-colors">
+                          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                            <Button
+                              onClick={() => handleClaimIncome(investment.propertyId)}
+                              disabled={investment.pendingIncome <= 0}
+                              className="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 shadow-md flex items-center gap-1"
+                            >
+                              <Coins className="h-4 w-4" />
+                              Claim
+                            </Button>
+                          </motion.div>
+                        </TableCell>
+                      </motion.tr>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="text-center py-12 text-slate-500 bg-blue-50/50 rounded-xl border border-blue-100 m-6"
+              >
+                <Wallet className="h-12 w-12 mx-auto text-blue-300 mb-4" />
+                <p className="text-lg font-medium text-blue-700">You don't have any investments yet.</p>
+                <p className="text-sm text-blue-600/70 mt-2">Explore properties above to start investing.</p>
+              </motion.div>
+            )}
+          </CardContent>
+        </Card>
+      </motion.div>
 
       <Dialog open={isBuyDialogOpen} onOpenChange={setIsBuyDialogOpen}>
-        <DialogContent>
+        <DialogContent className="border-amber-200 shadow-xl">
           <DialogHeader>
-            <DialogTitle>Buy Shares</DialogTitle>
+            <DialogTitle className="text-amber-700 flex items-center gap-2">
+              <Layers3 className="h-5 w-5" />
+              Buy Shares
+            </DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="shares">Number of Shares</Label>
+              <Label htmlFor="shares" className="text-amber-700 flex items-center gap-1">
+                <Layers3 className="h-4 w-4" />
+                Number of Shares
+              </Label>
               <Input
                 id="shares"
                 type="number"
@@ -146,17 +215,23 @@ export default function InvestorSection({ properties, investments, buyShares, cl
                 max={
                   selectedPropertyId
                     ? (() => {
-                      const property = properties.find((p) => p.id === selectedPropertyId);
-                      return property ? property.totalShares - property.soldShares : 0;
-                    })()
+                        const property = properties.find((p) => p.id === selectedPropertyId)
+                        return property ? property.totalShares - property.soldShares : 0
+                      })()
                     : 0
                 }
                 step="1"
+                className="border-amber-200 focus:border-amber-400 focus:ring-amber-400/30"
               />
             </div>
-            <Button onClick={handleBuyShares} className="bg-amber-500 hover:bg-amber-600">
-              Buy
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                onClick={handleBuyShares}
+                className="w-full bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 shadow-md"
+              >
+                Buy
+              </Button>
+            </motion.div>
           </div>
         </DialogContent>
       </Dialog>

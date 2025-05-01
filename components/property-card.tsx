@@ -1,98 +1,97 @@
 "use client"
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Building2, Home, Landmark, TreePine } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { Building2, DollarSign, Layers3 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import type { Property } from "@/app/explore/page"
+import { motion } from "framer-motion"
 
 interface PropertyCardProps {
   property: Property
-  onBuyClick: (propertyId: string) => void
-  type?: "explore" | "owned"
+  onBuyClick: () => void
 }
 
-export default function PropertyCard({ property, onBuyClick, type = "explore" }: PropertyCardProps) {
-  const [isHovered, setIsHovered] = useState(false)
-
-  // Randomly select a property icon
-  const icons = [Home, Building2, Landmark, TreePine]
-  const IconComponent = icons[Math.floor(property.id.charCodeAt(0) % icons.length)]
-
-  // Generate a random gradient for the card
-  const gradients = [
-    "from-teal-500 to-blue-500",
-    "from-amber-500 to-orange-500",
-    "from-green-500 to-emerald-500",
-    "from-blue-500 to-indigo-500",
-  ]
-  const gradient = gradients[Math.floor(property.id.charCodeAt(1) % gradients.length)]
+export default function PropertyCard({ property, onBuyClick }: PropertyCardProps) {
+  const availableShares = property.totalShares - property.soldShares
+  const percentSold = (property.soldShares / property.totalShares) * 100
 
   return (
     <motion.div
-      className="relative h-[280px] w-full perspective-1000"
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
+      whileHover={{
+        scale: 1.03,
+        boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      }}
+      transition={{ duration: 0.3 }}
     >
-      <motion.div
-        className={`absolute inset-0 rounded-xl bg-gradient-to-br ${gradient} shadow-lg preserve-3d`}
-        animate={{
-          rotateY: isHovered ? 15 : 0,
-          rotateX: isHovered ? -10 : 0,
-          scale: isHovered ? 1.05 : 1,
-          z: isHovered ? 20 : 0,
-        }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      >
-        <div className="absolute inset-0 flex flex-col p-6 text-white">
-          <div className="mb-2 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
-                <IconComponent className="h-5 w-5" />
-              </div>
-              <h3 className="text-xl font-bold">{property.name}</h3>
+      <Card className="overflow-hidden border-amber-200 h-full flex flex-col">
+        <div className="relative h-40 bg-gradient-to-br from-amber-400 to-amber-600 overflow-hidden">
+          <div className="absolute inset-0 opacity-20">
+            <div className="grid grid-cols-4 grid-rows-4 gap-1 p-2">
+              {Array(16)
+                .fill(0)
+                .map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="aspect-square bg-white rounded-md"
+                    animate={{
+                      z: Math.random() * 10,
+                      rotateX: Math.random() * 45,
+                      rotateY: Math.random() * 45,
+                    }}
+                    transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, repeatType: "reverse" }}
+                  />
+                ))}
             </div>
-            <Badge variant="outline" className="border-white/50 text-white">
-              ID: {property.id.substring(0, 6)}
-            </Badge>
           </div>
-
-          <div className="mt-auto space-y-4">
-            <div className="grid grid-cols-2 gap-2">
-              <div className="rounded-lg bg-white/10 p-3 backdrop-blur-sm">
-                <div className="text-xs text-white/70">Monthly Income</div>
-                <div className="text-lg font-bold">${property.monthlyIncome.toFixed(2)}</div>
-              </div>
-              <div className="rounded-lg bg-white/10 p-3 backdrop-blur-sm">
-                <div className="text-xs text-white/70">Shares</div>
-                <div className="text-lg font-bold">
-                  {property.soldShares}/{property.totalShares}
-                </div>
-              </div>
-            </div>
-
-            {type === "explore" ? (
-              <Button
-                onClick={() => onBuyClick(property.id)}
-                className="w-full bg-white text-slate-800 hover:bg-white/90"
-              >
-                Buy Shares
-              </Button>
-            ) : (
-              <div className="flex items-center justify-between rounded-lg bg-white/10 p-3 backdrop-blur-sm">
-                <div>
-                  <div className="text-xs text-white/70">Pending Income</div>
-                  <div className="text-lg font-bold">${property.pendingIncome.toFixed(2)}</div>
-                </div>
-                <Button size="sm" variant="outline" className="border-white/50 text-white hover:bg-white/20">
-                  Claim
-                </Button>
-              </div>
-            )}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Building2 className="h-16 w-16 text-white/80" />
           </div>
         </div>
-      </motion.div>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg font-bold text-amber-800 line-clamp-1">{property.name}</CardTitle>
+        </CardHeader>
+        <CardContent className="flex-grow">
+          <div className="space-y-4">
+            <div className="space-y-1">
+              <div className="text-sm text-slate-500 flex items-center gap-1">
+                <DollarSign className="h-3.5 w-3.5" />
+                Monthly Income
+              </div>
+              <div className="text-xl font-bold text-amber-600">${property.monthlyIncome.toFixed(2)}</div>
+            </div>
+            <div className="space-y-1">
+              <div className="flex justify-between text-sm text-slate-500">
+                <span className="flex items-center gap-1">
+                  <Layers3 className="h-3.5 w-3.5" />
+                  Shares Sold
+                </span>
+                <span>{percentSold.toFixed(0)}%</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div
+                  className="bg-gradient-to-r from-amber-400 to-amber-600 h-2 rounded-full"
+                  style={{ width: `${percentSold}%` }}
+                ></div>
+              </div>
+              <div className="flex justify-between text-xs text-slate-400">
+                <span>{property.soldShares} sold</span>
+                <span>{availableShares} available</span>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+        <CardFooter className="pt-0">
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full">
+            <Button
+              onClick={onBuyClick}
+              className="w-full bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 shadow-md"
+              disabled={availableShares === 0}
+            >
+              {availableShares > 0 ? "Buy Shares" : "Sold Out"}
+            </Button>
+          </motion.div>
+        </CardFooter>
+      </Card>
     </motion.div>
   )
 }

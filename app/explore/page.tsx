@@ -10,7 +10,9 @@ import { Navbar } from "@/components/navbar"
 import { useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react"
 import { useWriteContract } from "wagmi"
 import propAbi from "@/contract/cabi.json"
-
+import { motion } from "framer-motion"
+import { ChevronRight, Github, Hexagon, Twitter } from "lucide-react"
+import { Footer } from "@/components/footer"
 
 export default function Home() {
   const [properties, setProperties] = useState<Property[]>([
@@ -53,8 +55,8 @@ export default function Home() {
   const storageSC = "0xdbca3ec6fcc34ca570bf8eb54ca0099809bc20bf"
 
   const { isConnected } = useAppKitAccount() // AppKit hook to get the address and check if the user is connected
-  const { chainId } = useAppKitNetwork()  // to get chainid
-  const { writeContract, isSuccess } = useWriteContract()  // to interact with contract
+  const { chainId } = useAppKitNetwork() // to get chainid
+  const { writeContract, isSuccess } = useWriteContract() // to interact with contract
 
   const handleBuyShares = (propertyId: string, shares: number) => {
     try {
@@ -62,16 +64,15 @@ export default function Home() {
       writeContract({
         address: storageSC,
         abi: propAbi,
-        functionName: 'enlistProperty',
+        functionName: "enlistProperty",
         args: [propertyId, shares],
       })
     } catch (error) {
-      console.log(error);     
+      console.log(error)
     }
 
     if (isSuccess) {
-      console.log("============Successsfully called BUYSHARES============");
-
+      console.log("============Successsfully called BUYSHARES============")
     }
   }
 
@@ -164,65 +165,154 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-b from-amber-50/50 to-teal-50/50">
       <Navbar />
-      <div className="container mx-auto py-24 px-4">
-        <div className="mb-12 text-center">
-          <h1 className="text-5xl font-bold mb-6">
-            {/* <span className="text-amber-400">AGRO-</span>
-          <span className="text-slate-800">INDUSTRIAL</span>
-          <span className="text-teal-400"> HOLDING</span> */}
-          </h1>
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            <div className="bg-white rounded-full px-4 py-2 flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-teal-500"></div>
-              <span className="text-sm">Tokenized real estate with blockchain security</span>
-            </div>
-            <div className="bg-white rounded-full px-4 py-2 flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-teal-500"></div>
-              <span className="text-sm">Fractional ownership</span>
-            </div>
-            <div className="bg-white rounded-full px-4 py-2 flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-teal-500"></div>
-              <span className="text-sm">Automated rental payouts</span>
-            </div>
-            <div className="bg-white rounded-full px-4 py-2 flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-teal-500"></div>
-              <span className="text-sm">Diversified investment portfolio</span>
-            </div>
+
+      {/* Hero Section */}
+      <div className="relative pt-24 pb-12 overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-5">
+          <div className="grid grid-cols-12 grid-rows-6 gap-4 h-full">
+            {Array(72)
+              .fill(0)
+              .map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="bg-gradient-to-br from-amber-400 to-teal-500 rounded-lg"
+                  animate={{
+                    z: Math.random() * 20,
+                    rotateX: Math.random() * 45,
+                    rotateY: Math.random() * 45,
+                  }}
+                  transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY, repeatType: "reverse" }}
+                />
+              ))}
           </div>
         </div>
 
+        {/* <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            className="text-center max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="flex justify-center mb-6"
+            >
+              <div className="relative h-20 w-20 bg-gradient-to-br from-amber-400 to-teal-500 rounded-2xl shadow-lg shadow-amber-200/50 flex items-center justify-center">
+                <motion.div
+                  animate={{ rotateY: 360 }}
+                  transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, repeatType: "loop", ease: "linear" }}
+                >
+                  <Hexagon className="h-12 w-12 text-white" strokeWidth={1.5} />
+                </motion.div>
+              </div>
+            </motion.div>
+
+            <motion.h1
+              className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-amber-600 via-teal-600 to-amber-600 bg-clip-text text-transparent"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+            >
+              Yield Hive
+            </motion.h1>
+
+            <motion.p
+              className="text-xl md:text-2xl text-slate-700 mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+            >
+              Fractional Real Estate Investment Platform
+            </motion.p>
+
+            <motion.div
+              className="flex flex-wrap justify-center gap-4 mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+            >
+              <div className="bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2 shadow-md border border-amber-100">
+                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-amber-400 to-amber-600"></div>
+                <span className="text-sm">Tokenized real estate with blockchain security</span>
+              </div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2 shadow-md border border-amber-100">
+                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-teal-400 to-teal-600"></div>
+                <span className="text-sm">Fractional ownership</span>
+              </div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2 shadow-md border border-amber-100">
+                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-amber-400 to-amber-600"></div>
+                <span className="text-sm">Automated rental payouts</span>
+              </div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2 shadow-md border border-amber-100">
+                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-teal-400 to-teal-600"></div>
+                <span className="text-sm">Diversified investment portfolio</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div> */}
+      </div>
+
+      <div className="container mx-auto px-4 pb-24">
         {/* Top action boxes */}
-        <div className="grid gap-6 mb-8 md:grid-cols-2">
+        <motion.div
+          className="grid gap-6 mb-12 md:grid-cols-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.6 }}
+        >
           <QuickListBox onListProperty={enlistProperty} />
           <TokenClaimBox />
-        </div>
+        </motion.div>
 
-        <div className="bg-white rounded-xl shadow-lg p-6">
+        <motion.div
+          className="bg-white/80 backdrop-blur-md rounded-xl shadow-xl border border-amber-100/50 overflow-hidden"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.7 }}
+        >
           <Tabs defaultValue="property-owner" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-8">
-              <TabsTrigger value="property-owner">Property Owner</TabsTrigger>
-              <TabsTrigger value="investor">Investor</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 p-1 bg-amber-50/50">
+              <TabsTrigger
+                value="property-owner"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-500 data-[state=active]:to-teal-700 data-[state=active]:text-white rounded-lg py-3 transition-all duration-300"
+              >
+                Property Owner
+              </TabsTrigger>
+              <TabsTrigger
+                value="investor"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-400 data-[state=active]:to-amber-600 data-[state=active]:text-white rounded-lg py-3 transition-all duration-300"
+              >
+                Investor
+              </TabsTrigger>
             </TabsList>
-            <TabsContent value="property-owner">
-              <PropertyOwnerSection
-                properties={properties}
-                enlistProperty={enlistProperty}
-                depositIncome={depositIncome}
-              />
-            </TabsContent>
-            <TabsContent value="investor">
-              <InvestorSection
-                properties={properties}
-                investments={investments}
-                buyShares={buyShares}
-                claimIncome={claimIncome}
-              />
-            </TabsContent>
+            <div className="p-6">
+              <TabsContent value="property-owner">
+                <PropertyOwnerSection
+                  properties={properties}
+                  enlistProperty={enlistProperty}
+                  depositIncome={depositIncome}
+                />
+              </TabsContent>
+              <TabsContent value="investor">
+                <InvestorSection
+                  properties={properties}
+                  investments={investments}
+                  buyShares={buyShares}
+                  claimIncome={claimIncome}
+                />
+              </TabsContent>
+            </div>
           </Tabs>
-        </div>
+        </motion.div>
       </div>
+
+      {/* Footer */}
+      <Footer/>
     </div>
   )
 }
