@@ -36,7 +36,7 @@ export default function QuickListBox({ onListProperty }: QuickListBoxProps) {
 
 
 
-  const storageSC = "0x7dba8a59f58db102e515c554e3d7546f358dfa85" 
+  const storageSC = "0xdbca3ec6fcc34ca570bf8eb54ca0099809bc20bf" 
 
   const { isConnected } = useAppKitAccount() // AppKit hook to get the address and check if the user is connected
   const { chainId } = useAppKitNetwork()  // to get chainid

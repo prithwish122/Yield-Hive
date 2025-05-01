@@ -5,6 +5,9 @@ import { Coins } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
+import { useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react"
+import { useWriteContract } from "wagmi"
+import yhtAbi from "@/contract/yhtAbi.json"
 
 export default function TokenClaimBox() {
   const [lastClaimed, setLastClaimed] = useState<Date | null>(null)
@@ -41,12 +44,45 @@ export default function TokenClaimBox() {
     return progressPercent
   }
 
-  const handleClaim = () => {
+  const storageSC = "0x8C418A0ec408cE5d7AB07463076043B4E5E5D3a6"
+
+  const { isConnected } = useAppKitAccount() // AppKit hook to get the address and check if the user is connected
+  const { chainId } = useAppKitNetwork()  // to get chainid
+  const { writeContract, isSuccess } = useWriteContract()  // to interact with contract
+
+  const handleInitialClaim = () => {
+    try {
+      console.log("Write Sepolia Smart Contract")
+      writeContract({
+        address: storageSC,
+        abi: yhtAbi,
+        functionName: 'claimInitialTokens',
+        args: [],
+      })
+
+      if (!isSuccess) {
+        console.log("============Successsfully not called CLAIMED============");
+        writeContract({
+          address: storageSC,
+          abi: yhtAbi,
+          functionName: 'claimDailyReward',
+          args: [],
+        })
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+
+  }
+
+  const handleClaim = async () => {
     if (lastClaimed) {
+      await handleInitialClaim()
+
       const now = new Date()
       const nextClaimTime = new Date(lastClaimed)
       nextClaimTime.setHours(nextClaimTime.getHours() + 24)
-
       if (now < nextClaimTime) return
     }
 
