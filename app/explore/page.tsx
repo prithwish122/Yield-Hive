@@ -52,7 +52,7 @@ export default function Home() {
 
   const [investments, setInvestments] = useState<Investment[]>([])
 
-  const storageSC = "0xdbca3ec6fcc34ca570bf8eb54ca0099809bc20bf"
+  const storageSC = "0xe5f7ca0b01b44e2f1eb59741242e7a78e484c539"
 
   const { isConnected } = useAppKitAccount() // AppKit hook to get the address and check if the user is connected
   const { chainId } = useAppKitNetwork() // to get chainid

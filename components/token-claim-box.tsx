@@ -44,31 +44,28 @@ export default function TokenClaimBox() {
     return progressPercent
   }
 
-  const storageSC = "0x8C418A0ec408cE5d7AB07463076043B4E5E5D3a6"
+  const storageSC = "0xf06ccdf5a06d4781532f6a788234311bb705a7b0"
 
   const { isConnected } = useAppKitAccount() // AppKit hook to get the address and check if the user is connected
   const { chainId } = useAppKitNetwork()  // to get chainid
   const { writeContract, isSuccess } = useWriteContract()  // to interact with contract
 
   const handleInitialClaim = () => {
+    console.log("INSIDE CLAIM FUNCTION")
+
+    if (!isConnected) {
+      console.log("please sign up");
+
+      return
+    }
     try {
-      console.log("Write Sepolia Smart Contract")
+      console.log("Faucet for YHT TOKEN initiated,========================")
       writeContract({
         address: storageSC,
         abi: yhtAbi,
-        functionName: 'claimInitialTokens',
+        functionName: 'claimTokens',
         args: [],
       })
-
-      if (!isSuccess) {
-        console.log("============Successsfully not called CLAIMED============");
-        writeContract({
-          address: storageSC,
-          abi: yhtAbi,
-          functionName: 'claimDailyReward',
-          args: [],
-        })
-      }
     } catch (error) {
       console.log(error);
     }
@@ -77,8 +74,10 @@ export default function TokenClaimBox() {
   }
 
   const handleClaim = async () => {
+    console.log("INSIDE HANDLE CLAIM PART 1=====================", !lastClaimed)
+    await handleInitialClaim()
+
     if (lastClaimed) {
-      await handleInitialClaim()
 
       const now = new Date()
       const nextClaimTime = new Date(lastClaimed)
