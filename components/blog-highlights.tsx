@@ -12,7 +12,7 @@ const blogPosts = [
     excerpt:
       "Discover how blockchain technology is revolutionizing the real estate market and creating new opportunities...",
     date: "April 15, 2023",
-    image: "/placeholder.svg?height=200&width=400",
+    image: "https://lh7-rt.googleusercontent.com/docsz/AD_4nXc2B-7S21NvBRIRZs7TSe_d-uNpTY3Va_pxHvqo4-SOzoTfOh5BpC89wyZWWoUmeesQ-yWZnCDuAuw67INUCHgW0IesLYXiuBApOv5X_2fA8CY2CTky7lYKYQzDMdUyywoWTcBIJLTTGeo8ol9mRmnj8eVW?key=LnF16YidvM9dVAhWsF4ryQ",
     category: "Investment",
   },
   {
@@ -21,7 +21,7 @@ const blogPosts = [
     excerpt:
       "Learn how to start building a diversified real estate portfolio with minimal capital and maximum returns...",
     date: "March 28, 2023",
-    image: "/placeholder.svg?height=200&width=400",
+    image: "https://www.vgn.in/blogs/uploads/1727699547000A%20Guide%20To%20Earn%20Passive%20Income%20Through%20Real%20Estate.jpg",
     category: "Guide",
   },
   {
@@ -30,7 +30,7 @@ const blogPosts = [
     excerpt:
       "An in-depth look at how blockchain technology is removing intermediaries and reducing costs in real estate...",
     date: "February 12, 2023",
-    image: "/placeholder.svg?height=200&width=400",
+    image: "https://www.antiersolutions.com/blogs/wp-content/uploads/2023/05/Smart-Contracts-Transforming-Real-Estate-with-Transparency-and-Automation.jpg",
     category: "Technology",
   },
 ]
