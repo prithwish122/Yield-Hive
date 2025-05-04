@@ -11,9 +11,9 @@ YieldHive is a Web3 RWA (Real World Asset) platform built on the Pharos Chain th
 
 🚀 Deployed Contracts on Pharos:
 
-- 🏗️ YieldHivePropertyManager: 0xe5f7ca0b01b44e2f1eb59741242e7a78e484c539
+- 🏗️ **YieldHivePropertyManager: 0xe5f7ca0b01b44e2f1eb59741242e7a78e484c539**
 
-- 🪙 YHT Token (YieldHive Token): 0xf06ccdf5a06d4781532f6a788234311bb705a7b0
+- 🪙 **YHT Token (YieldHive Token): 0xf06ccdf5a06d4781532f6a788234311bb705a7b0**
 
 ---
 
@@ -67,6 +67,9 @@ Its high TPS (transactions per second) architecture ensures smooth scalability a
 
 ---
 
+
+
+---
 ## 🔗 Smart Contract Functions
 
 📥 Property Owner:
