@@ -67,7 +67,7 @@ Its high TPS (transactions per second) architecture ensures smooth scalability a
 
 ---
 
-
+![Yield-Hive Flow](https://github.com/prithwish122/Yield-Hive/blob/main/asset/simple.png?raw=true)
 
 ---
 ## 🔗 Smart Contract Functions
@@ -94,6 +94,10 @@ Its high TPS (transactions per second) architecture ensures smooth scalability a
 
 - getPendingIncome(propertyId, address)
 
+-------
+
+![Backend Flow](https://github.com/prithwish122/Yield-Hive/blob/main/asset/backend.png?raw=true)
+
 ---
 
 ## 💡 Why Use YieldHive?
@@ -119,6 +123,7 @@ Its high TPS (transactions per second) architecture ensures smooth scalability a
 🪙 Token Utility: YHT is used for gas rewards, staking for early access to listings, and reduced fees.
 
 📊 Institutional Access: Offer APIs and bulk-investment tooling for funds/DAOs interested in real estate yield.
+
 ---------
 
 📌 YieldHIVE Progress Tracker
@@ -127,9 +132,9 @@ Its high TPS (transactions per second) architecture ensures smooth scalability a
 
 🔐 Deployed Smart Contracts
 
-YieldHivePropertyManager — 0xe5f7ca0b01b44e2f1eb59741242e7a78e484c539
+**YieldHivePropertyManager — 0xe5f7ca0b01b44e2f1eb59741242e7a78e484c539
 
-YHT Token — 0xf06ccdf5a06d4781532f6a788234311bb705a7b0
+YHT Token — 0xf06ccdf5a06d4781532f6a788234311bb705a7b0**
 
 🧠 Smart Contract Features
 
